@@ -1,53 +1,50 @@
-# gitignore template for Drupal 8 projects
-#
-# earlier versions of Drupal are tracked in `community/PHP/`
+/drush/contrib/
+
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/profiles/contrib/
 
 # Ignore configuration files that may contain sensitive information
-/sites/*/*settings*.php
-/sites/*/*services*.yml
+/web/sites/*/*settings*.php
+/web/sites/*/*services*.yml
 
 # Ignore paths that may contain user-generated content
-/sites/*/files
-/sites/*/public
-/sites/*/private
-/sites/*/files-public
-/sites/*/files-private
+/web/sites/*/files
+/web/sites/*/public
+/web/sites/*/private
+/web/sites/*/files-public
+/web/sites/*/files-private
 
 # Ignore paths that may contain temporary files
-/sites/*/translations
-/sites/*/tmp
-/sites/*/cache
+/web/sites/*/translations
+/web/sites/*/tmp
+/web/sites/*/cache
 
 # Ignore testing related files
-/sites/simpletest
+/web/sites/simpletest
 
-# Ignore drupal core (if not versioning drupal sources)
-/core
-/modules/README.txt
-/profiles/README.txt
-/sites/README.txt
-/sites/example.sites.php
-/sites/example.settings.local.php
-/sites/development.services.yml
-/themes/README.txt
-/vendor
-/.csslintrc
+/web/themes/contrib/
+/web/libraries/
+
+**/dest/*
+**/node_modules/
+**/.DS_Store
+**/.env
+**/.sass-cache
+**/.idea
 /.editorconfig
+/.gitattributes
+/.csslintrc
 /.eslintignore
 /.eslintrc.json
-/.gitattributes
+/.ht.router.php
 /.htaccess
+/INSTALL.txt
+/README.txt
 /autoload.php
-/composer.json
-/composer.lock
 /example.gitignore
 /index.php
-/LICENSE.txt
-/README.txt
 /robots.txt
 /update.php
 /web.config
-
-# Ignore IDE files
-.vscode/**
-.idea/**
