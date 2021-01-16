@@ -1,7 +1,7 @@
-mymodule.example:
-  path: '/mymodule/example'
+mymodule.team_list:
+  path: '/reports/nfl/teams'
   defaults:
-    _title: 'Example'
-    _controller: '\Drupal\mymodule\Controller\MymoduleController::build'
+    _title: 'Team List'
+    _controller: '\Drupal\mymodule\Controller\MymoduleController::teamList'
   requirements:
     _permission: 'access content'
