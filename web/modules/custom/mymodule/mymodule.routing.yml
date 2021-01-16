@@ -1,0 +1,7 @@
+mymodule.example:
+  path: '/mymodule/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\mymodule\Controller\MymoduleController::build'
+  requirements:
+    _permission: 'access content'
