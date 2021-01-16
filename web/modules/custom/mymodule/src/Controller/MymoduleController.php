@@ -7,6 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Returns responses for mymodule routes.
@@ -34,10 +35,19 @@ class MymoduleController extends ControllerBase {
     );
   }
 
+
   /**
-   * Builds the response.
+   * @param Request $request
+   * @return array
    */
-  public function teamList() {
+  public function teamList(Request $request) {
+
+    $headerTemplate = [
+      'display_name' => 'Team Name',
+      'nickname' => 'Nickname',
+      'conference' => 'National Football Conference',
+      'division' => 'West',
+    ];
 
     $client = $this->httpClient->fromOptions([
       'base_uri' => 'http://delivery.chalk247.com',
@@ -51,9 +61,22 @@ class MymoduleController extends ControllerBase {
 
     $result = Json::decode($response->getBody());
 
+    $header = [];
+    foreach ($headerTemplate as $colId => $colName) {
+      $header[] = $colName;
+    }
+
+    $rows = [];
+    foreach($result['data']['team'] as $index => $team) {
+      $rows[] = [
+        'data' => array_intersect_key($headerTemplate, $team),
+      ];
+    }
+
     $build['content'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('Here I should display the team list!'),
+      '#type' => 'table',
+      '#header' => $header,
+      '$rows' => $rows,
     ];
 
     return $build;
