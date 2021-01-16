@@ -1,0 +1,15 @@
+/**
+ * ntpc-d8 v1.0.0 [2021-01-16]
+ *
+ * Drupal 8 theme, custom-built for NWT Power Corporation
+ *
+ * Package    DRUPAL8
+ * Subpackage bootstrap_ntpc
+ * Version    1.0.0
+ * Author     Mario Lozano <mariolizarraga07@gmail.com>
+ */
+
+
+body{color:#3b3b3b;background:#292929}#page{background:#fff}#main-wrapper{background:#fff}.region-primary-menu .menu-item a.is-active{background:#fff}.region-primary-menu .menu-item--active-trail a{background:#fff}.tabs ul.primary li a.is-active{background-color:#fff}.tabs ul.primary li.is-active a{background-color:#fff;border-bottom-color:#fff}#navbar-top{background-color:#055a8e}#navbar-main{background-color:#1d84c3}a{color:#0071b3}a:hover{color:#018fe2}a:focus{color:#018fe2}a:active{color:#23aeff}.link{color:#0071b3}.link:hover{color:#018fe2}.link:focus{color:#018fe2}.link:active{color:#23aeff}.page-item.active .page-link{background-color:#0071b3;border-color:#0071b3}.page-link{color:#0071b3}.page-link:hover{color:#0071b3}.sidebar .block{background-color:#f6f6f2;border-color:#f9f9f9}.btn-primary{background-color:#007bff;border-color:#007bff}.btn-primary:hover{background-color:#0256b1}.btn-primary:focus{background-color:#0256b1}.site-footer{background:#292929}.region-header{color:#fffeff}.region-header a{color:#fffeff}.region-header li a.is-active{color:#fffeff}.region-header .site-branding__text{color:#fffeff}.region-header .site-branding__text a{color:#fffeff}.region-header .site-branding{color:#fffeff}.region-header .site-branding a{color:#fffeff}.region-secondary-menu .menu-item a{color:#fffeff}.region-secondary-menu .menu-item a.is-active{color:#fffeff}[dir=rtl] .color-form .color-palette{margin-left:0;margin-right:20px}[dir=rtl] .color-form .color-palette .lock{right:-20px;left:0}[dir=rtl] .color-form .form-item label{float:right}.cards__block--homepage .field--name-field-cards .field__item:nth-child(n+3){margin-top:3rem}
+
+/*# sourceMappingURL=styles.css.map */

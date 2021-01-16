@@ -1,0 +1,9 @@
+.cards__block--homepage {
+  .field--name-field-cards {
+    .field__item {
+      &:nth-child(n+3) {
+        margin-top: 3rem;
+      }
+    }
+  }
+}

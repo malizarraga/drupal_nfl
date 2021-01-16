@@ -5,6 +5,9 @@ core: 8.x
 core_version_requirement: ^8 || ^9
 base theme: bootstrap_barrio
 
+libraries-override:
+  bootstrap_barrio/global-styling: false
+
 libraries:
   - mytheme/bootstrap_cdn
   - mytheme/global-styling
