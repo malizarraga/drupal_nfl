@@ -27,6 +27,7 @@
         "drupal/core-composer-scaffold": "^9.1",
         "drupal/core-project-message": "^9.1",
         "drupal/core-recommended": "^9.1",
+        "drupal/devel": "^4.1",
         "drupal/views_json_source": "^1.0",
         "drupal/webform": "^6.0",
         "drush/drush": "^10.3",
