@@ -6,9 +6,7 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Render\RendererInterface;
-use GuzzleHttp\Client;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Returns responses for mymodule routes.
