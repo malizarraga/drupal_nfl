@@ -70,7 +70,7 @@ class MymoduleController extends ControllerBase {
     foreach($result['results']['data']['team'] as $index => $team) {
       $detailData = array_intersect_key($team, $headerTemplate);
       $rows[] = [
-        'data' => $detailData,
+        'data' => array_values($detailData),
       ];
     }
 
