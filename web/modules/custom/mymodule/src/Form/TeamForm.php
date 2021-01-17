@@ -93,7 +93,7 @@ class TeamForm extends FormBase {
     }
 
     if ($form_state->getValue('op') == 'Filter') {
-      $teams = $this->filterData($teams, $form_state);
+      $teams = $this->filterData($teams, $form_state, $cols);
     }
 
     foreach($teams as $index => $team) {
@@ -180,11 +180,11 @@ class TeamForm extends FormBase {
    * @param Request $request
    * @return array
    */
-  function filterData(array $source, FormStateInterface $formState)
+  function filterData(array $source, FormStateInterface $formState, array $validKeys)
   {
     $data = $source;
     foreach($formState->getValues() as $key => $value) {
-      if ($value != 'none' && $value != '0' && $value != 'Filter' && !empty($value)) {
+      if (array_key_exists($key, $validKeys)) {
         $data = array_filter($data, fn($x) => strtolower($x[$key]) == strtolower($value));
       }
     }
