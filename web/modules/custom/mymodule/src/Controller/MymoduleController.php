@@ -104,9 +104,9 @@ class MymoduleController extends ControllerBase {
 
   function buildFilter(&$form, $data) {
 
-    $division = array_column($data, 'division');
-    $conference = array_column($data, 'conference');
-    $name = array_column($data, 'name');
+    $division = $this->buildSelectOptions($data, 'division');
+    $conference = $this->buildSelectOptions($data, 'conference');
+    $name = $this->buildSelectOptions($data, 'name');
 
     $form['form'] = [
       '#type'  => 'form',
@@ -125,7 +125,7 @@ class MymoduleController extends ControllerBase {
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
       '#size'          => 0,
-      '#options'       => array_merge(['none'], array_unique($name)),
+      '#options'       => array_merge(['none'], $name),
       '#default_value' => 'none'
     ];
 
@@ -136,7 +136,7 @@ class MymoduleController extends ControllerBase {
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
       '#size'          => 0,
-      '#options'       => array_merge(['none'], array_unique($division)),
+      '#options'       => array_merge(['none'], $division),
       '#default_value' => 'none'
     ];
 
@@ -148,6 +148,17 @@ class MymoduleController extends ControllerBase {
       '#type'  => 'submit',
       '#value' => $this->t('Filter')
     ];
+  }
+
+  function buildSelectOptions(array $data, $colKey) {
+    $column = array_column($data, $colKey);
+    $options = [];
+
+    foreach (array_unique($column) as $key => $value) {
+      $options[strtolower($value)] = $value;
+    }
+
+    return $options;
   }
 
 }
