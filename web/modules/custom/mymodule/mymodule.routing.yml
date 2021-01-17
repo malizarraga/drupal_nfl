@@ -5,3 +5,10 @@ mymodule.team_list:
     _controller: '\Drupal\mymodule\Controller\MymoduleController::teamList'
   requirements:
     _permission: 'access content'
+mymodule.team:
+  path: '/reports/nfl/team/list'
+  defaults:
+    _title: 'Team List'
+    _form: 'Drupal\mymodule\Form\TeamForm'
+  requirements:
+    _permission: 'access content'
