@@ -6,6 +6,8 @@ use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Http\ClientFactory;
+use Drupal\Core\Render\RendererInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -14,9 +16,26 @@ use Symfony\Component\HttpFoundation\Request;
 class TeamForm extends FormBase {
 
   /**
+   * @var RendererInterface
+   */
+  protected $renderer;
+
+  /**
    * @var ClientFactory
    */
-  private $httpClient;
+  protected $httpClient;
+
+  public function __construct(RendererInterface $renderer, ClientFactory $http_client) {
+    $this->renderer = $renderer;
+    $this->httpClient = $http_client;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('renderer'),
+      $container->get('http_client_factory')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -29,8 +48,6 @@ class TeamForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
-    $this->httpClient = \Drupal::service('http_client_factory');
 
     $client = $this->httpClient->fromOptions([
       'base_uri' => 'http://delivery.chalk247.com',
