@@ -1,5 +1,5 @@
 mymodule.team_list:
-  path: '/reports/nfl/teams'
+  path: '/nfl/team/import'
   defaults:
     _title: 'Team List'
     _controller: '\Drupal\mymodule\Controller\MymoduleController::teamList'
