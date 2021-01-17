@@ -1,0 +1,7 @@
+myform.team:
+  path: '/reports/nfl/team/list'
+  defaults:
+    _title: 'Team List'
+    _form: 'Drupal\myform\Form\TeamForm'
+  requirements:
+    _permission: 'access content'
