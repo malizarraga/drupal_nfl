@@ -85,10 +85,12 @@ class TeamForm extends FormBase {
     $header = [];
     $rows = [];
 
+    $division = $this->buildSelectOptions($teams, 'division');
+    $name = $this->buildSelectOptions($teams, 'name');
+
     foreach ($cols as $colId => $colName) {
       $header[] = $colName;
     }
-
 
     if ($form_state->getValue('op') == 'Filter') {
       $teams = $this->filterData($teams, $form_state);
@@ -110,9 +112,6 @@ class TeamForm extends FormBase {
 
       $rows[] = $row;
     }
-
-    $division = $this->buildSelectOptions($teams, 'division');
-    $name = $this->buildSelectOptions($teams, 'name');
 
     $form['filters'] = [
       '#type'  => 'fieldset',
