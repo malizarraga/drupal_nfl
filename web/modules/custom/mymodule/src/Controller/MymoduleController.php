@@ -188,12 +188,15 @@ class MymoduleController extends ControllerBase {
         ]);
       }
 
+      $conference = $this->checkTaxonomyByName($item['conference']);
+      $division = $this->checkTaxonomyByName($item['division']);
+
       $node->set('title', $item['name']);
       $node->set('field_nickname', $item['nickname']);
       $node->set('field_display_name', $item['display_name']);
       $node->set('field_id', $item['id']);
-      $node->set('field_conference', $this->checkTaxonomyByName($item['conference'])->tid);
-      $node->set('field_division', $this->checkTaxonomyByName($item['division'])->tid);
+      $node->set('field_conference', $conference->tid);
+      $node->set('field_division', $division->tid);
 
       $node->save();
     }
@@ -208,7 +211,7 @@ class MymoduleController extends ControllerBase {
           ON taxo.tid = tdata.tid
       WHERE name = :name";
 
-    $query = $this->connection->query($sql, ['name' => $name]);
+    $query = $this->connection->query($sql, [':name' => $name]);
 
     return $query->fetchAll();
 
