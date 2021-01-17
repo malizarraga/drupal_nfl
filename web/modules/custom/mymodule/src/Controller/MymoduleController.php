@@ -79,7 +79,7 @@ class MymoduleController extends ControllerBase {
     $build['content'] = [
       '#type' => 'table',
       '#header' => $header,
-      '$rows' => $rows,
+      '#rows' => $rows,
     ];
 
     return $build;
