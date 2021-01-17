@@ -111,9 +111,8 @@ class TeamForm extends FormBase {
       $rows[] = $row;
     }
 
-    $division = $this->buildSelectOptions($data, 'division');
-    $conference = $this->buildSelectOptions($data, 'conference');
-    $name = $this->buildSelectOptions($data, 'name');
+    $division = $this->buildSelectOptions($teams, 'division');
+    $name = $this->buildSelectOptions($teams, 'name');
 
     $form['form'] = [
       '#type'  => 'form',
