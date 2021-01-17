@@ -78,8 +78,10 @@ class MymoduleController extends ControllerBase {
         if ($key = 'display_name') {
           $cell['class'] = 'cell-primary';
         }
+
         $row[] = $cell;
       }
+
       $rows[] = $row;
     }
 
