@@ -192,8 +192,8 @@ class MymoduleController extends ControllerBase {
       $node->set('field_nickname', $item['nickname']);
       $node->set('field_display_name', $item['display_name']);
       $node->set('field_id', $item['id']);
-      $node->set('field_conference', $this->checkTaxonomyByName($item['conference']));
-      $node->set('field_division', $this->checkTaxonomyByName($item['division']));
+      $node->set('field_conference', $this->checkTaxonomyByName($item['conference'])->tid);
+      $node->set('field_division', $this->checkTaxonomyByName($item['division'])->tid);
 
       $node->save();
     }
