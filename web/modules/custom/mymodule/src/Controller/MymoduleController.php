@@ -42,9 +42,58 @@ class MymoduleController extends ControllerBase {
    */
   public function teamList(Request $request) {
 
+    $client = $this->httpClient->fromOptions([
+      'base_uri' => 'http://delivery.chalk247.com',
+    ]);
+
+    $response = $client->get('/team_list/NFL.JSON', [
+      'query' => [
+        'api_key' => '74db8efa2a6db279393b433d97c2bc843f8e32b0',
+      ],
+    ]);
+
+    $result = Json::decode($response->getBody());
+
+    if (empty($result)) {
+      $form['content'] = [
+        '#type' => 'markup',
+        '#markup' => $this->t('There are no records using the current endpoint. Please try again later.'),
+      ];
+
+      return $form;
+    }
+
+    $teams = $result['results']['data']['team'];
+    $cols = $result['results']['columns'];
+
+    $header = [];
+    $rows = [];
+
+    foreach ($cols as $colId => $colName) {
+      $header[] = $colName;
+    }
+
+    foreach($teams as $index => $team) {
+      $row = [];
+      foreach($team as $key => $data) {
+        $cell = [];
+
+        $cell['data'] = $data;
+
+        if ($key == 'display_name') {
+          $cell['class'] = 'cell-primary';
+        }
+
+        $row[] = $cell;
+      }
+
+      $rows[] = $row;
+    }
+
     $build['content'] = [
-      '#type' => 'markup',
-      '#markup' => 'This is a test again !!!',
+      '#type' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
     ];
 
     return $build;
