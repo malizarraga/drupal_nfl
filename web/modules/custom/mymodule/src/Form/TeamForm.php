@@ -30,7 +30,7 @@ class TeamForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $httpClient = \Drupal::service('http_client_factory');
+    $this->httpClient = \Drupal::service('http_client_factory');
 
     $client = $this->httpClient->fromOptions([
       'base_uri' => 'http://delivery.chalk247.com',
