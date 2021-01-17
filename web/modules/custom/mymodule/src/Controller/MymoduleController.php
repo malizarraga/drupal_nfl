@@ -75,7 +75,7 @@ class MymoduleController extends ControllerBase {
 
         $cell['data'] = $data;
 
-        if ($key = 'display_name') {
+        if ($key == 'display_name') {
           $cell['class'] = 'cell-primary';
         }
 
