@@ -90,6 +90,19 @@ class MymoduleController extends ControllerBase {
       $rows[] = $row;
     }
 
+    $build['form'] = [
+      '#type' => 'form',
+    ];
+
+    $build['form']['operations']['actions'] = [
+      '#type' => 'actions',
+    ];
+
+    $build['form']['operations']['actions']['submit'] = [
+      '#type' => 'submit',
+      '#value' => 'Import',
+    ];
+
     $build['content'] = [
       '#type' => 'table',
       '#header' => $header,
