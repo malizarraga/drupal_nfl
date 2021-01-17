@@ -183,7 +183,9 @@ class MymoduleController extends ControllerBase {
       }
       else {
         /** @var NodeInterface $node */
-        $node = $this->entityTypeManager()->getStorage('node')->create();
+        $node = $this->entityTypeManager()->getStorage('node')->create([
+          'type' => 'team'
+        ]);
       }
 
       $node->set('title', $item['name']);
