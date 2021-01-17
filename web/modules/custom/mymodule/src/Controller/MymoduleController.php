@@ -95,7 +95,7 @@ class MymoduleController extends ControllerBase {
     }
 
     $build = [];
-    $this->buildFilter($build, $result['results']['data']['team']);
+    $this->buildFilter($build, $result['results']['data']['team'], $request);
 
     $build['content'] = [
       '#type' => 'table',
@@ -109,8 +109,9 @@ class MymoduleController extends ControllerBase {
   /**
    * @param $form
    * @param $data
+   * @param Request $request
    */
-  function buildFilter(&$form, $data) {
+  function buildFilter(&$form, $data, Request $request) {
 
     $division = $this->buildSelectOptions($data, 'division');
     $conference = $this->buildSelectOptions($data, 'conference');
@@ -134,7 +135,7 @@ class MymoduleController extends ControllerBase {
       '#empty_option'  => '- None -',
       '#size'          => 0,
       '#options'       => array_merge(['none'], $name),
-      '#default_value' => 'none'
+      '#default_value' => !empty($request->request->get('name')) ? $request->request->get('name') : 'none',
     ];
 
     $form['form']['filters']['division'] = [
@@ -145,7 +146,7 @@ class MymoduleController extends ControllerBase {
       '#empty_option'  => '- None -',
       '#size'          => 0,
       '#options'       => array_merge(['none'], $division),
-      '#default_value' => 'none'
+      '#default_value' => !empty($request->request->get('division')) ? $request->request->get('name') : 'none',
     ];
 
     $form['form']['filters']['actions'] = [
