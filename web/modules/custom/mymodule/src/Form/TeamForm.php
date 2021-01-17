@@ -90,7 +90,7 @@ class TeamForm extends FormBase {
     }
 
 
-    if ($form_state->get('op') == 'Filter') {
+    if ($form_state->getValue('op') == 'Filter') {
       $teams = $this->filterData($teams, $form_state);
     }
 
