@@ -181,10 +181,9 @@ class MymoduleController extends ControllerBase {
    */
   function filterData(array $source, Request $request)
   {
-    $data = [];
-
+    $data = $source;
     foreach($request->request->all() as $key => $value) {
-      if ($value != 'none') {
+      if ($value != 'none' || $value != '0' || $value != 'op') {
         $data = array_filter($data, fn($x) => strtolower($x[$key]) == $value);
       }
     }
