@@ -73,6 +73,8 @@ class MymoduleController extends ControllerBase {
       $header[] = $colName;
     }
 
+    $header[] = 'Status';
+
     foreach($teams as $index => $team) {
       $row = [];
       foreach($team as $key => $data) {
@@ -84,9 +86,13 @@ class MymoduleController extends ControllerBase {
           $cell['class'] = 'cell-primary';
         }
 
-        $row[] = $cell;
+       $row[] = $cell;
       }
 
+      $row[] = [
+        'data' => 'No Imported',
+        'class' => 'bg-danger',
+      ];
       $rows[] = $row;
     }
 
