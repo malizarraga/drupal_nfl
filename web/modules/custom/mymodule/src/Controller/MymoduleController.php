@@ -54,13 +54,26 @@ class MymoduleController extends ControllerBase {
 
     $result = Json::decode($response->getBody());
 
+    if (empty($result)) {
+      $build['content'] = [
+        '#type' => 'markup',
+        '#markup' => 'There are no records using the current endpoint. Please try again later.',
+      ];
+
+      return $build;
+    }
+
+    $teams = $result['results']['data']['team'];
+    $cols = $result['results']['columns'];
+
     $header = [];
-    foreach ($result['results']['columns'] as $colId => $colName) {
+    $rows = [];
+
+    foreach ($cols as $colId => $colName) {
       $header[] = $colName;
     }
 
-    $rows = [];
-    foreach($result['results']['data']['team'] as $index => $team) {
+    foreach($teams as $index => $team) {
       $row = [];
       foreach($team as $key => $data) {
         $cell = [];
@@ -77,6 +90,9 @@ class MymoduleController extends ControllerBase {
       $rows[] = $row;
     }
 
+    $build = [];
+    $this->buildFilter($build, $result['results']['data']['team']);
+
     $build['content'] = [
       '#type' => 'table',
       '#header' => $header,
@@ -84,6 +100,38 @@ class MymoduleController extends ControllerBase {
     ];
 
     return $build;
+  }
+
+  function buildFilter(&$form, $data) {
+
+    $form['form'] = [
+      '#type'  => 'form',
+    ];
+
+    $form['form']['filters'] = [
+      '#type'  => 'fieldset',
+      '#title' => $this->t('Filter'),
+      '#open'  => true,
+    ];
+
+    $form['form']['filters']['division'] = [
+      '#title'         => 'Division',
+      '#type'          => 'select',
+      '#empty_value'   => 'none',
+      '#empty_option'  => '- None -',
+      '#size'          => 0,
+      '#options'       => array_unique(array_column($data, 'division')),
+      '#default_value' => 'none'
+    ];
+
+    $form['form']['filters']['actions'] = [
+      '#type'       => 'actions'
+    ];
+
+    $form['form']['filters']['actions']['submit'] = [
+      '#type'  => 'submit',
+      '#value' => $this->t('Filter')
+    ];
   }
 
 }
