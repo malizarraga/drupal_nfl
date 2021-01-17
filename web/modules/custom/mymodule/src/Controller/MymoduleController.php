@@ -7,6 +7,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -81,6 +82,10 @@ class MymoduleController extends ControllerBase {
     $teams = $result['results']['data']['team'];
     $cols = $result['results']['columns'];
 
+    if ($request->request->get('op') == 'Import') {
+      $this->importData($teams);
+    }
+
     $header = [];
     $rows = [];
 
@@ -104,7 +109,7 @@ class MymoduleController extends ControllerBase {
        $row[] = $cell;
       }
 
-      if (!$this->checkImportedRow($team)) {
+      if (!empty($this->checkImportedRow($team))) {
         $row[] = [
           'data' => 'No Imported',
           'class' => 'bg-danger',
@@ -146,7 +151,7 @@ class MymoduleController extends ControllerBase {
    * @param $row
    * @return bool
    */
-  function checkImportedRow($row) {
+  function checkImportedRow(array $row) {
 
     $sql = "SELECT
         node.nid,
@@ -160,7 +165,51 @@ class MymoduleController extends ControllerBase {
 
     $query = $this->connection->query($sql, ['id' => $row['id']]);
 
-    return !empty($query->fetchAll());
+    return $query->fetchAll();
+  }
+
+  /**
+   * @param array $data
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  function importData(array $data) {
+
+    foreach ($data as $index => $item) {
+      if ($nodeInfo = $this->checkImportedRow($item)) {
+        /** @var NodeInterface $node */
+        $node = $this->entityTypeManager()->getStorage('node')->load($nodeInfo->nid);
+      }
+      else {
+        /** @var NodeInterface $node */
+        $node = $this->entityTypeManager()->getStorage('node')->create();
+      }
+
+      $node->set('title', $item['name']);
+      $node->set('field_nickname', $item['nickname']);
+      $node->set('field_display_name', $item['display_name']);
+      $node->set('field_id', $item['id']);
+      $node->set('field_conference', $this->checkTaxonomyByName($item['conference']));
+      $node->set('field_division', $this->checkTaxonomyByName($item['division']));
+
+      $node->save();
+    }
+
+  }
+
+  function checkTaxonomyByName($name) {
+
+    $sql = "SELECT taxo.tid
+      FROM taxonomy_term_data AS taxo
+        LEFT JOIN taxonomy_term_field_data AS tdata
+          ON taxo.tid = tdata.tid
+      WHERE name = :name";
+
+    $query = $this->connection->query($sql, ['name' => $name]);
+
+    return $query->fetchAll();
+
   }
 
 }
