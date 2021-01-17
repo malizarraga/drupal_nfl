@@ -114,48 +114,44 @@ class TeamForm extends FormBase {
     $division = $this->buildSelectOptions($teams, 'division');
     $name = $this->buildSelectOptions($teams, 'name');
 
-    $form['form'] = [
-      '#type'  => 'form',
-    ];
-
-    $form['form']['filters'] = [
+    $form['filters'] = [
       '#type'  => 'fieldset',
       '#title' => $this->t('Filter'),
       '#open'  => true,
     ];
 
-    $form['form']['filters']['name'] = [
+    $form['filters']['name'] = [
       '#title'         => $this->t('Name'),
       '#name'          => 'name',
       '#type'          => 'select',
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
       '#size'          => 0,
-      '#options'       => array_merge(['none'], $name),
+      '#options'       => $name,
       '#default_value' => !empty($form_state->get('name')) ? $form_state->get('name') : 'none',
     ];
 
-    $form['form']['filters']['division'] = [
+    $form['filters']['division'] = [
       '#title'         => $this->t('Division'),
       '#name'          => 'division',
       '#type'          => 'select',
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
       '#size'          => 0,
-      '#options'       => array_merge(['none'], $division),
+      '#options'       => $division,
       '#default_value' => !empty($form_state->get('division')) ? $form_state->get('name') : 'none',
     ];
 
-    $form['form']['filters']['actions'] = [
+    $form['filters']['actions'] = [
       '#type'       => 'actions'
     ];
 
-    $form['form']['filters']['actions']['submit'] = [
+    $form['filters']['actions']['submit'] = [
       '#type'  => 'submit',
       '#value' => $this->t('Filter')
     ];
 
-    $build['content'] = [
+    $form['content'] = [
       '#type' => 'table',
       '#header' => $header,
       '#rows' => $rows,
