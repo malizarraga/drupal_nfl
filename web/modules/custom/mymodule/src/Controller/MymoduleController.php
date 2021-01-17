@@ -165,7 +165,7 @@ class MymoduleController extends ControllerBase {
 
     $query = $this->connection->query($sql, ['id' => $row['id']]);
 
-    return $query->fetchAll();
+    return $query->fetchAll()[0];
   }
 
   /**
@@ -213,7 +213,7 @@ class MymoduleController extends ControllerBase {
 
     $query = $this->connection->query($sql, [':name' => $name]);
 
-    return $query->fetchAll();
+    return $query->fetchAll()[0];
 
   }
 
