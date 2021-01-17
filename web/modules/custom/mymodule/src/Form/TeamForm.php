@@ -185,7 +185,7 @@ class TeamForm extends FormBase {
   {
     $data = $source;
     foreach($formState->getValues() as $key => $value) {
-      if ($value != 'none' && $value != '0' && $value != 'Filter') {
+      if ($value != 'none' && $value != '0' && $value != 'Filter' && !empty($value)) {
         $data = array_filter($data, fn($x) => strtolower($x[$key]) == strtolower($value));
       }
     }
