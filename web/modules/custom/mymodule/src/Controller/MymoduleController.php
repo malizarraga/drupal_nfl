@@ -120,6 +120,7 @@ class MymoduleController extends ControllerBase {
 
     $form['form']['filters']['name'] = [
       '#title'         => $this->t('Name'),
+      '#name'          => 'filter_by_name',
       '#type'          => 'select',
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
@@ -130,6 +131,7 @@ class MymoduleController extends ControllerBase {
 
     $form['form']['filters']['division'] = [
       '#title'         => $this->t('Division'),
+      '#name'          => 'filter_by_division',
       '#type'          => 'select',
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
