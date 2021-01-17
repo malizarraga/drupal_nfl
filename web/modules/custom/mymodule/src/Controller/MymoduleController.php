@@ -42,13 +42,6 @@ class MymoduleController extends ControllerBase {
    */
   public function teamList(Request $request) {
 
-    $headerTemplate = [
-      'display_name' => 'Team Name',
-      'nickname' => 'Nickname',
-      'conference' => 'National Football Conference',
-      'division' => 'West',
-    ];
-
     $client = $this->httpClient->fromOptions([
       'base_uri' => 'http://delivery.chalk247.com',
     ]);
@@ -62,15 +55,14 @@ class MymoduleController extends ControllerBase {
     $result = Json::decode($response->getBody());
 
     $header = [];
-    foreach ($headerTemplate as $colId => $colName) {
+    foreach ($result['results']['columns'] as $colId => $colName) {
       $header[] = $colName;
     }
 
     $rows = [];
     foreach($result['results']['data']['team'] as $index => $team) {
-      $detailData = array_intersect_key($team, $headerTemplate);
       $row = [];
-      foreach($detailData as $key => $data) {
+      foreach($team as $key => $data) {
         $cell = [];
 
         $cell['data'] = $data;
