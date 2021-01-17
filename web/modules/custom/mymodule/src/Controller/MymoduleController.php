@@ -109,7 +109,7 @@ class MymoduleController extends ControllerBase {
        $row[] = $cell;
       }
 
-      if (!empty($this->checkImportedRow($team))) {
+      if (count($this->checkImportedRow($team)) <= 0) {
         $row[] = [
           'data' => 'No Imported',
           'class' => 'bg-danger',
