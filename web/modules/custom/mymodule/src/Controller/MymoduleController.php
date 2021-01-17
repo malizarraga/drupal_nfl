@@ -124,7 +124,7 @@ class MymoduleController extends ControllerBase {
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
       '#size'          => 0,
-      '#options'       => ['none'] + array_unique($name),
+      '#options'       => array_merge(['none'], array_unique($name)),
       '#default_value' => 'none'
     ];
 
@@ -134,7 +134,7 @@ class MymoduleController extends ControllerBase {
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
       '#size'          => 0,
-      '#options'       => ['none'] + array_unique($division),
+      '#options'       => array_merge(['none'], array_unique($division)),
       '#default_value' => 'none'
     ];
 
