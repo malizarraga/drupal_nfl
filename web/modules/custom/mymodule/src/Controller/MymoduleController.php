@@ -57,7 +57,7 @@ class MymoduleController extends ControllerBase {
     if (empty($result)) {
       $build['content'] = [
         '#type' => 'markup',
-        '#markup' => 'There are no records using the current endpoint. Please try again later.',
+        '#markup' => $this->t('There are no records using the current endpoint. Please try again later.'),
       ];
 
       return $build;
@@ -104,6 +104,10 @@ class MymoduleController extends ControllerBase {
 
   function buildFilter(&$form, $data) {
 
+    $division = array_column($data, 'division');
+    $conference = array_column($data, 'conference');
+    $name = array_column($data, 'name');
+
     $form['form'] = [
       '#type'  => 'form',
     ];
@@ -114,13 +118,23 @@ class MymoduleController extends ControllerBase {
       '#open'  => true,
     ];
 
-    $form['form']['filters']['division'] = [
-      '#title'         => 'Division',
+    $form['form']['filters']['name'] = [
+      '#title'         => $this->t('Name'),
       '#type'          => 'select',
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
       '#size'          => 0,
-      '#options'       => array_unique(array_column($data, 'division')),
+      '#options'       => ['none'] + array_unique($name),
+      '#default_value' => 'none'
+    ];
+
+    $form['form']['filters']['division'] = [
+      '#title'         => $this->t('Division'),
+      '#type'          => 'select',
+      '#empty_value'   => 'none',
+      '#empty_option'  => '- None -',
+      '#size'          => 0,
+      '#options'       => ['none'] + array_unique($division),
       '#default_value' => 'none'
     ];
 
