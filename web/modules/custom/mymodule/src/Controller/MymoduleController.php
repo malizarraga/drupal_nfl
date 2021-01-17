@@ -110,6 +110,12 @@ class MymoduleController extends ControllerBase {
           'class' => 'bg-danger',
         ];
       }
+      else {
+        $row[] = [
+          'data' => 'Imported',
+          'class' => 'bg-success',
+        ];
+      }
 
       $rows[] = $row;
     }
