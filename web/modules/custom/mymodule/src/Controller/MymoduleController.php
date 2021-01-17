@@ -73,6 +73,10 @@ class MymoduleController extends ControllerBase {
       $header[] = $colName;
     }
 
+    if ($request->request->get('op') == 'Filter') {
+      $teams = $this->filterData($teams, $request);
+    }
+
     foreach($teams as $index => $team) {
       $row = [];
       foreach($team as $key => $data) {
@@ -102,6 +106,10 @@ class MymoduleController extends ControllerBase {
     return $build;
   }
 
+  /**
+   * @param $form
+   * @param $data
+   */
   function buildFilter(&$form, $data) {
 
     $division = $this->buildSelectOptions($data, 'division');
@@ -120,7 +128,7 @@ class MymoduleController extends ControllerBase {
 
     $form['form']['filters']['name'] = [
       '#title'         => $this->t('Name'),
-      '#name'          => 'filter_by_name',
+      '#name'          => 'name',
       '#type'          => 'select',
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
@@ -131,7 +139,7 @@ class MymoduleController extends ControllerBase {
 
     $form['form']['filters']['division'] = [
       '#title'         => $this->t('Division'),
-      '#name'          => 'filter_by_division',
+      '#name'          => 'division',
       '#type'          => 'select',
       '#empty_value'   => 'none',
       '#empty_option'  => '- None -',
@@ -150,6 +158,11 @@ class MymoduleController extends ControllerBase {
     ];
   }
 
+  /**
+   * @param array $data
+   * @param $colKey
+   * @return array
+   */
   function buildSelectOptions(array $data, $colKey) {
     $column = array_column($data, $colKey);
     $options = [];
@@ -159,6 +172,24 @@ class MymoduleController extends ControllerBase {
     }
 
     return $options;
+  }
+
+  /**
+   * @param array $source
+   * @param Request $request
+   * @return array
+   */
+  function filterData(array $source, Request $request)
+  {
+    $data = [];
+
+    foreach($request->request->all() as $key => $value) {
+      if ($value != 'none') {
+        $data = array_filter($data, fn($x) => strtolower($x[$key]) == $value);
+      }
+    }
+
+    return $data;
   }
 
 }
