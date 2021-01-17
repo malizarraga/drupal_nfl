@@ -4,6 +4,7 @@ namespace Drupal\mymodule\Controller;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -17,21 +18,35 @@ class MymoduleController extends ControllerBase {
   /**
    * @var RendererInterface
    */
-  private $renderer;
+  protected $renderer;
+
   /**
    * @var ClientFactory
    */
-  private $httpClient;
+  protected $httpClient;
 
-  public function __construct(RendererInterface $renderer, ClientFactory $http_client) {
+  /**
+   * @var Connection
+   */
+  protected $connection;
+
+  /**
+   * MymoduleController constructor.
+   * @param RendererInterface $renderer
+   * @param ClientFactory $http_client
+   * @param Connection $connection
+   */
+  public function __construct(RendererInterface $renderer, ClientFactory $http_client, Connection $connection) {
     $this->renderer = $renderer;
     $this->httpClient = $http_client;
+    $this->connection = $connection;
   }
 
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('renderer'),
-      $container->get('http_client_factory')
+      $container->get('http_client_factory'),
+      $container->get('database')
     );
   }
 
@@ -89,10 +104,13 @@ class MymoduleController extends ControllerBase {
        $row[] = $cell;
       }
 
-      $row[] = [
-        'data' => 'No Imported',
-        'class' => 'bg-danger',
-      ];
+      if (!$this->checkImportedRow($team[$index])) {
+        $row[] = [
+          'data' => 'No Imported',
+          'class' => 'bg-danger',
+        ];
+      }
+
       $rows[] = $row;
     }
 
@@ -116,6 +134,27 @@ class MymoduleController extends ControllerBase {
     ];
 
     return $build;
+  }
+
+  /**
+   * @param $row
+   * @return bool
+   */
+  function checkImportedRow($row) {
+
+    $sql = "SELECT
+        node.nid,
+        node.title,
+        itemid.field_id_value
+      FROM node_field_data AS node
+        LEFT JOIN node__field_id AS itemid
+          ON node.nid = itemid.entity_id
+      WHERE node.type = 'team'
+      AND itemid.field_id_value = :id";
+
+    $query = $this->connection->query($sql, ['id' => $row['id']]);
+
+    return !empty($query->fetchAll());
   }
 
 }
