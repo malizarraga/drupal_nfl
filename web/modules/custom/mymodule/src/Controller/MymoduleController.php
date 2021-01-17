@@ -69,9 +69,11 @@ class MymoduleController extends ControllerBase {
     $rows = [];
     foreach($result['results']['data']['team'] as $index => $team) {
       $detailData = array_intersect_key($team, $headerTemplate);
-      $rows[] = [
-        'data' => array_values($detailData),
-      ];
+      $row = [];
+      foreach($detailData as $key => $data) {
+        $row[]['data'] = $data;
+      }
+      $rows[] = $row;
     }
 
     $build['content'] = [
