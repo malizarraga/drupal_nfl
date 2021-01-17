@@ -71,6 +71,8 @@ class MymoduleController extends ControllerBase {
       $detailData = array_intersect_key($team, $headerTemplate);
       $row = [];
       foreach($detailData as $key => $data) {
+        $cell = [];
+
         $cell['data'] = $data;
 
         if ($key = 'display_name') {
