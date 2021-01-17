@@ -183,7 +183,7 @@ class MymoduleController extends ControllerBase {
   {
     $data = $source;
     foreach($request->request->all() as $key => $value) {
-      if ($value != 'none' && $value != '0' && $value != 'op') {
+      if ($value != 'none' && $value != '0' && $value != 'Filter') {
         $data = array_filter($data, fn($x) => strtolower($x[$key]) == strtolower($value));
       }
     }
